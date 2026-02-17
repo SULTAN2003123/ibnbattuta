@@ -1,0 +1,636 @@
+:root {
+    /* Color Palette - Deep Blue & Gold (Premium Historical) */
+    --primary-hue: 210;
+    --gold-hue: 45;
+
+    --bg-color: hsl(var(--primary-hue), 30%, 10%);
+    --bg-secondary: hsl(var(--primary-hue), 25%, 15%);
+    --text-main: hsl(var(--primary-hue), 10%, 95%);
+    --text-muted: hsl(var(--primary-hue), 10%, 70%);
+    --accent: hsl(var(--gold-hue), 80%, 50%);
+    --accent-glow: hsla(var(--gold-hue), 80%, 50%, 0.3);
+
+    --glass-bg: hsla(var(--primary-hue), 30%, 12%, 0.7);
+    --glass-border: hsla(var(--primary-hue), 10%, 90%, 0.1);
+
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Inter', sans-serif;
+
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+
+    --header-height: 80px;
+    --timeline-width: 350px;
+
+    --transition-speed: 0.3s;
+}
+
+[data-theme="light"] {
+    --bg-color: hsl(35, 30%, 95%);
+    --bg-secondary: hsl(35, 30%, 90%);
+    --text-main: hsl(210, 30%, 15%);
+    --text-muted: hsl(210, 10%, 40%);
+    --accent: hsl(210, 70%, 40%);
+    --accent-glow: hsla(210, 70%, 40%, 0.2);
+
+    --glass-bg: hsla(35, 30%, 98%, 0.8);
+    --glass-border: hsla(210, 10%, 20%, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll only */
+    overflow-y: auto;
+    /* Allow vertical scroll */
+    transition: background-color var(--transition-speed);
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+}
+
+/* Glass Header */
+.glass-header {
+    height: var(--header-height);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--spacing-md);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: none;
+    transform: none;
+    width: 100%;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-shadow: none;
+    border: none;
+}
+
+#theme-toggle {
+    display: block;
+    /* Restore toggle */
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+#theme-toggle:hover {
+    background-color: var(--glass-border);
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Hero Section */
+.hero-section {
+    position: fixed;
+    /* Fixed to cover everything even if scrolled */
+    inset: 0;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Ibn_Battuta_in_Egypt.jpg/1200px-Ibn_Battuta_in_Egypt.jpg') no-repeat center center/cover;
+    z-index: 3000;
+    /* Highest priority */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.8s;
+}
+
+.hero-section.hidden {
+    transform: translateY(-100%);
+    pointer-events: none;
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8));
+    z-index: -1;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    padding: var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: none;
+    color: #fff;
+}
+
+.hero-content::before,
+.hero-content::after {
+    display: none;
+}
+
+.hero-content h1 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    color: #fff;
+    /* Always white on hero */
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--font-body);
+}
+
+.cta-button {
+    background: var(--accent);
+    color: #111;
+    border: none;
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px var(--accent-glow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: normal;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px var(--accent-glow);
+    background: var(--accent);
+}
+
+/* Progress Header */
+.progress-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 2500;
+    /* High, but lower than hero (3000) */
+    background: linear-gradient(to bottom, rgba(5, 10, 20, 0.95), rgba(5, 10, 20, 0));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    pointer-events: none;
+    /* Let clicks pass through to map? No, header is interactive usually. kept simple */
+}
+
+.rihla-title {
+    font-family: var(--font-heading);
+    color: var(--accent);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.progress-bar-container {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.year-display {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--accent);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Layout Containers */
+.main-container {
+    position: relative;
+    width: 100%;
+}
+
+.sticky-map {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0.8);
+    /* Slightly dark map for text contrast */
+    will-change: transform;
+    /* Hardware accelerate */
+}
+
+/* Snappy Dash Animation */
+@keyframes dash-animation {
+    to {
+        stroke-dashoffset: -20;
+    }
+}
+
+/* Base Path Style */
+.leaflet-overlay-pane path {
+    stroke-linecap: round;
+    transition: all 0.5s ease;
+}
+
+/* Performance: Disable expensive filters during map interaction */
+body.is-map-moving .active-glow {
+    filter: none !important;
+    /* Huge performance gain */
+    animation: none !important;
+}
+
+/* Active Glow Class */
+.active-glow {
+    filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 15px var(--accent));
+    animation: dash-animation 1s linear infinite;
+    stroke: #fff !important;
+    stroke-opacity: 1 !important;
+    will-change: filter, stroke-dashoffset;
+    /* Hint to browser */
+}
+
+/* Static Path - Dimmer */
+.static-path {
+    opacity: 0.5;
+    filter: none;
+}
+
+.story-scroller {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    margin-top: -100vh;
+    /* Pull content up to overlay map */
+    pointer-events: none;
+    /* Let clicks pass through spacers */
+}
+
+.scroll-spacer-top {
+    height: 50vh;
+    /* Start scrolling before first card hits top */
+}
+
+.scroll-spacer-bottom {
+    height: 50vh;
+    /* Allow last card to scroll up */
+}
+
+.story-stream {
+    max-width: 1200px;
+    margin: 0 auto;
+    pointer-events: none;
+}
+
+/* Floating Story Cards */
+.story-card-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    /* Align to right */
+    padding: 10vh 20px;
+    pointer-events: none;
+}
+
+.story-card {
+    width: 450px;
+    background: rgba(15, 20, 30, 0.85);
+    /* Semi-transparent dark */
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    opacity: 0.3;
+    /* Dim by default */
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+    /* Re-enable clicks on cards */
+    will-change: transform, opacity;
+    /* Hardware Acceleration */
+}
+
+.story-card.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    border-color: var(--accent-glow);
+    box-shadow: 0 0 30px rgba(255, 165, 0, 0.1), 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-badge {
+    background: var(--accent);
+    color: #111;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.card-distance {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--accent);
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.distance-icon {
+    filter: grayscale(1);
+    font-size: 1rem;
+}
+
+.card-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--text-main);
+    /* White/Light */
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.card-title span {
+    color: var(--accent);
+    /* Highlight city name if needed */
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    filter: brightness(0.9);
+}
+
+.card-desc {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #ccc;
+}
+
+/* Hide removed elements */
+#timeline-container,
+.glass-panel,
+.timeline-item {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .story-card-wrapper {
+        justify-content: center;
+        padding: 5vh 15px;
+    }
+
+    .story-card {
+        width: 100%;
+        padding: 25px;
+        background: rgba(15, 20, 30, 0.95);
+        /* More opaque on mobile */
+    }
+
+    .progress-header {
+        padding: 0 20px;
+    }
+
+    .year-display {
+        font-size: 1.8rem;
+    }
+
+    .card-title {
+        font-size: 1.8rem;
+    }
+}
+
+/* Story Controls (Modernized) */
+.story-controls {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    /* Move to right for modern feel */
+    left: auto;
+    transform: none;
+    z-index: 1000;
+    display: flex;
+    gap: 15px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    padding: 10px 20px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn {
+    background: var(--accent);
+    border: none;
+    color: #111;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nav-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--accent-glow);
+    background: var(--accent);
+    color: #111;
+}
+
+.nav-btn:disabled {
+    background: var(--glass-border);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Journal Overlay -> Glass Modal */
+.journal-overlay {
+    position: absolute;
+    bottom: 100px;
+    right: 30px;
+    top: auto;
+    width: 350px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: var(--spacing-lg);
+    color: var(--text-main);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: translateX(120%);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 900;
+    font-family: var(--font-body);
+}
+
+.journal-overlay.visible {
+    transform: translateX(0);
+}
+
+.journal-overlay::before {
+    display: none;
+}
+
+.journal-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: var(--spacing-md);
+    border: none;
+    filter: none;
+    box-shadow: none;
+    transform: none;
+}
+
+.journal-date {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: var(--spacing-xs);
+    border-bottom: none;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.journal-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+    border-bottom: none;
+}
+
+.journal-text {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+
+/* Markers */
+.leaflet-marker-icon {
+    filter: none;
+}
+
+.map-tooltip {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-grid {
+        flex-direction: column-reverse;
+        /* Map on top (visually), Timeline below */
+    }
+
+    #timeline-container {
+        width: 100%;
+        height: 35vh;
+        border-right: none;
+        border-top: 1px solid var(--glass-border);
+        border-left: none;
+        padding: 0;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .story-controls {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .journal-overlay {
+        bottom: 90px;
+        right: 20px;
+        left: 20px;
+        width: auto;
+        transform: translateY(120%);
+    }
+
+    .journal-overlay.visible {
+        transform: translateY(0);
+    }
+}

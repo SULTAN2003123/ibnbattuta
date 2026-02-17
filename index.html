@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Travels of Ibn Battuta</title>
+    <meta name="description"
+        content="Explore the legendary journeys of Ibn Battuta through an interactive map and timeline.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Header / Nav -->
+        <header class="glass-header">
+            <div class="logo">Ibn Battuta</div>
+            <nav>
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <h1>A Journey of a Lifetime</h1>
+                <p>Retracing the steps of the greatest traveler in history across 75,000 miles of the medieval world.
+                </p>
+                <button id="start-journey-btn" class="cta-button">Start the Journey</button>
+            </div>
+            <div class="hero-overlay"></div>
+        </section>
+
+        <!-- Progress Header -->
+        <div class="progress-header">
+            <div class="progress-info">
+                <span class="rihla-title">THE RIHLA</span>
+                <div class="progress-bar-container">
+                    <div id="journey-progress" class="progress-bar"></div>
+                </div>
+            </div>
+            <div id="year-display" class="year-display">1325 AD</div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-container">
+            <!-- Sticky Map Background -->
+            <div id="map-container" class="sticky-map">
+                <div id="map"></div>
+            </div>
+
+            <!-- Scrollable Story Stream -->
+            <div id="story-scroller" class="story-scroller">
+                <!-- Spacer for initial scroll -->
+                <div class="scroll-spacer-top"></div>
+
+                <div id="story-stream" class="story-stream">
+                    <!-- Story Cards injected via JS -->
+                </div>
+
+                <!-- Spacer for final scroll -->
+                <div class="scroll-spacer-bottom"></div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- App Scripts -->
+    <script src="main.js"></script>
+</body>
+
+</html>
