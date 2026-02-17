@@ -295,16 +295,26 @@ function updateMapState(index) {
     const progressPct = ((index + 1) / travelData.length) * 100;
     progressBar.style.width = `${progressPct}%`;
 
-    // Highlight Marker (Simple radius change for modern look)
+    // Highlight Marker
     markers.forEach(m => {
+        // Reset
         if (m.marker._path) {
             m.marker._path.classList.remove('active-glow');
+            m.marker._path.style.animation = ''; // Clear inline animation
         }
 
         if (m.index === index) {
             m.marker.setRadius(12);
             m.marker.setStyle({ color: '#fff', fillOpacity: 1 });
-            if (m.marker._path) m.marker._path.classList.add('active-glow');
+
+            // Add Pulse Effect via CSS class
+            if (m.marker._path) {
+                m.marker._path.classList.add('active-glow');
+                // We use the same glow class but can add specific marker animation if needed
+                // actually active-glow has stroke animation which might look weird on a circle
+                // Let's override it for the marker to be a pulse
+                m.marker._path.style.animation = 'pulse-scale 2s infinite ease-in-out';
+            }
         } else {
             m.marker.setRadius(8);
             m.marker.setStyle({ color: 'var(--accent)', fillOpacity: 0.8 });
@@ -323,9 +333,10 @@ function updateMapState(index) {
         activeSegmentPolyline = L.polyline(segment, {
             color: '#fff',
             weight: 4,
-            dashArray: '10, 10',
-            className: 'active-glow' // CSS handles animation and glow
+            opacity: 1,
+            className: 'active-glow' // CSS handles glow and pulse
         }).addTo(map);
+
     }
 }
 

@@ -290,13 +290,85 @@ body.is-map-moving .active-glow {
 }
 
 /* Active Glow Class */
+/* Active Glow Class */
 .active-glow {
     filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 15px var(--accent));
-    animation: dash-animation 1s linear infinite;
+    animation: glow-pulse 3s infinite ease-in-out;
     stroke: #fff !important;
     stroke-opacity: 1 !important;
-    will-change: filter, stroke-dashoffset;
-    /* Hint to browser */
+    stroke-dasharray: none !important;
+    /* Ensure solid */
+    will-change: opacity, filter;
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        opacity: 0.8;
+        filter: drop-shadow(0 0 5px var(--accent));
+    }
+
+    50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 15px var(--accent)) drop-shadow(0 0 25px var(--accent));
+    }
+}
+
+/* Marker Pulse Animation */
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        transform: scale(0.8);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+.leaflet-marker-icon.active-marker {
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes active-dash-flow {
+    to {
+        stroke-dashoffset: -50;
+        /* Smooth flow */
+    }
+}
+
+@keyframes pulse-scale {
+    0% {
+        transform: scale(1);
+        stroke-width: 2px;
+        stroke-opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.3);
+        stroke-width: 1px;
+        stroke-opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        stroke-width: 2px;
+        stroke-opacity: 1;
+    }
+}
+
+/* Transform origin center for SVG scaling */
+.leaflet-marker-icon,
+.leaflet-overlay-pane path {
+    transform-origin: center;
+    transform-box: fill-box;
 }
 
 /* Static Path - Dimmer */
